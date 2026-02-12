@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Для Светланы ❤️</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <style>
+        :root {
+            --pink: #ffafbd;
+            --rose: #ffc3a0;
+            --dark-pink: #e91e63;
+            --text: #4a4a4a;
+            --bg: #fff5f7;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, var(--bg) 0%, #ffeef2 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Падающие сердечки */
+        #hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .heart {
+            position: absolute;
+            color: var(--dark-pink);
+            opacity: 0.6;
+            user-select: none;
+        }
+
+        /* Кнопка музыки */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            width: 45px;
+            height: 45px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* Шапка */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(3rem, 10vw, 5rem);
+            color: var(--dark-pink);
+            margin: 0;
+            animation: fadeIn 2s ease;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            opacity: 0.8;
+        }
+
+        /* Секция галереи - Оптимизация под вертикальные фото */
+        .gallery-section {
+            padding: 50px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 30px;
+            color: var(--dark-pink);
+        }
+
+        .swiper {
+            width: 85%;
+            max-width: 400px; /* Ограничение для десктопа, чтобы вертикальные фото не были огромными */
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(233, 30, 99, 0.2);
+        }
+
+        .swiper-slide img {
+            width: 100%;
+            aspect-ratio: 3 / 4; /* Пропорция портретного фото */
+            object-fit: cover;
+            object-position: center 20%; /* Фокус на лицах */
+            display: block;
+        }
+
+        /* Сообщение */
+        .love-message {
+            max-width: 600px;
+            margin: 60px auto;
+            padding: 40px 25px;
+            background: white;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* Таймер */
+        .countdown-section {
+            background: var(--dark-pink);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .time-block {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px);
+            padding: 15px;
+            border-radius: 15px;
+            min-width: 75px;
+        }
+
+        .time-block span {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .time-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer {
+            padding: 40px;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.5;
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Адаптация под телефон */
+        @media (max-width: 480px) {
+            .swiper { width: 90%; }
+            .love-message { margin: 40px 20px; }
+            .time-block { min-width: 65px; padding: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="hearts-container"></div>
+
+<div class="music-toggle" id="musicBtn">🎵</div>
+<audio id="bgMusic" loop>
+    <source src="your-music-file.mp3" type="audio/mpeg">
+</audio>
+
+<header>
+    <h1>Для Светланы ❤️</h1>
+    <p class="subtitle">Минск ✈️ Москва</p>
+</header>
+
+<section class="gallery-section">
+    <h2 class="section-title">Наши моменты</h2>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="image_1.jpg" alt="Photo 1"></div>
+            <div class="swiper-slide"><img src="image_2.jpg" alt="Photo 2"></div>
+            <div class="swiper-slide"><img src="image_3.jpg" alt="Photo 3"></div>
+            <div class="swiper-slide"><img src="image_4.jpg" alt="Photo 4"></div>
+            <div class="swiper-slide"><img src="image_5.jpg" alt="Photo 5"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<div class="love-message">
+    <p>
+        Света, расстояние — это лишь проверка, которую мы проходим каждый день. 
+        Пусть этот сайт напоминает тебе о том, что моё сердце всегда рядом, 
+        в каком бы городе я ни находился. <br><br>
+        Ты делаешь меня счастливым даже через экран телефона. 
+        С праздником, моя самая любимая! <br><br>
+        <strong>Твой Тимофей</strong>
+    </p>
+</div>
+
+<section class="countdown-section">
+    <h2>До встречи осталось:</h2>
+    <div class="timer">
+        <div class="time-block"><span id="days">00</span><div class="time-label">дней</div></div>
+        <div class="time-block"><span id="hours">00</span><div class="time-label">часов</div></div>
+        <div class="time-block"><span id="minutes">00</span><div class="time-label">мин</div></div>
+        <div class="time-block"><span id="seconds">00</span><div class="time-label">сек</div></div>
+    </div>
+    <p style="margin-top: 25px; font-weight: 300;">Жду 18 апреля ❤️</p>
+</section>
+
+<footer>
+    2026 | Сделано с любовью для Светы
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    // 1. Инициализация слайдера
+    const swiper = new Swiper(".mySwiper", {
+        effect: "cards", // Красивый эффект стопки карт
+        grabCursor: true,
+        loop: true,
+        autoplay: { delay: 3000 },
+        pagination: { el: ".swiper-pagination", dynamicBullets: true },
+    });
+
+    // 2. Таймер (Дата: 18 апреля 2026)
+    const targetDate = new Date("April 18, 2026 00:00:00").getTime();
+
+    function updateTimer() {
+        const now = new Date().getTime();
+        const diff = targetDate - now;
+        
+        if (diff < 0) return;
+
+        document.getElementById("days").innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById("hours").innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById("minutes").innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById("seconds").innerText = Math.floor((diff % (1000 * 60)) / 1000);
+    }
+    setInterval(updateTimer, 1000);
+    updateTimer();
+
+    // 3. Падающие сердечки
+    function createHeart() {
+        const container = document.getElementById('hearts-container');
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+        heart.style.top = '-20px';
+        
+        const duration = Math.random() * 3 + 3;
+        heart.style.transition = `transform ${duration}s linear, top ${duration}s linear, opacity ${duration}s ease-out`;
+        
+        container.appendChild(heart);
+
+        setTimeout(() => {
+            heart.style.top = '100vh';
+            heart.style.transform = `translateX(${Math.random() * 100 - 50}px) rotate(${Math.random() * 360}deg)`;
+            heart.style.opacity = '0';
+        }, 100);
+
+        setTimeout(() => heart.remove(), duration * 1000);
+    }
+    setInterval(createHeart, 400);
+
+    // 4. Музыкальный плеер
+    const btn = document.getElementById('musicBtn');
+    const audio = document.getElementById('bgMusic');
+    btn.addEventListener('click', () => {
+        if (audio.paused) {
+            audio.play();
+            btn.innerHTML = '⏸️';
+            btn.style.animation = 'pulse 2s infinite';
+        } else {
+            audio.pause();
+            btn.innerHTML = '🎵';
+            btn.style.animation = 'none';
+        }
+    });
+</script>
+
+</body>
+</html>
